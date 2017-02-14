@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}{% endblock title %}42 Coffee Cups Test Assignment</title>
+        <title>{% block title %}{% endblock title %}</title>
 
         <meta http-equiv="X-UA-Compatible" content="chrome=IE7" />
 
@@ -23,44 +23,13 @@
         <![endif]-->        
     </head>
     <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
-        {% block content %}{% endblock content %}
-        <div class='container'>
-        <div class="row">
-            <div class="col-md-12"><h3>42 Coffee Cups Test Assignment</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">Name</div>
-            <div class="col-md-6">Contacts</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">Last name</div>
-            <div class="col-md-6">Email: email</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"></div>
-            <div class="col-md-6">Jabber: JID</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">Date of birth</div>
-            <div class="col-md-6">Skype: ID</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                Bio:<br>
-                Multiline
-            </div>
-            <div class="col-md-6">
-                Other contacts:<br>
-                Multiline
-            </div>
-        </div>
-    </div>
 
-    <script type="text/javascript" src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
-    <!-- jQuery -->
-    <script src="{% static 'jquery/jquery.min.js' %}"></script>
-    <!-- Bootstrap -->
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+        {% block content %}{% endblock content %}
+        
+        <script type="text/javascript" src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
+        <!-- jQuery -->
+        <script src="{% static 'jquery/jquery.min.js' %}"></script>
+        <!-- Bootstrap -->
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     </body>
 </html>
