@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, url
-from django.views.generic import TemplateView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from apps.hello.views import IndexView
 
 urlpatterns = patterns(
     '',
-    url(r'^$', TemplateView.as_view(template_name='index.html'), name="index"),
+    url(r'^$', IndexView.as_view(), name="index"),
 )
 urlpatterns += staticfiles_urlpatterns()
