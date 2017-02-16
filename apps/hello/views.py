@@ -16,7 +16,7 @@ class IndexView(TemplateView):
             raise Http404
         return super(IndexView, self).get(request, *args, **kwargs)
 
-    def context(self, **kwargs):
-        context = super(IndexView, self).context(**kwargs)
+    def get_context_data(self, **kwargs):
+        content = super(IndexView, self).get_context_data(**kwargs)
         content['person'] = self.content
-        return context
+        return content

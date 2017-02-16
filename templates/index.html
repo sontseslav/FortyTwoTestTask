@@ -31,11 +31,11 @@
         <div class="row">
             <div class="col-md-6">
                 Bio:<br>
-                {{ person.bio }}
+                {% autoescape off %}{{ person.bio }}{% endautoescape %}
             </div>
             <div class="col-md-6">
                 Other contacts:<br>
-                {{ person.other_contacts }}
+                {% autoescape off %}{{ person.other_contacts }}{% endautoescape %}
             </div>
         </div>
     </div>

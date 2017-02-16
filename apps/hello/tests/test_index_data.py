@@ -4,7 +4,7 @@ from apps.hello.models import Person
 
 
 class IndexDataTests(TestCase):
-    fixtures = ['hello.json']
+    fixtures = ['initial_data.json']
 
     def test_index_reachable(self):
         "is index page reachable by url name"
@@ -19,7 +19,6 @@ class IndexDataTests(TestCase):
     def test_index_hardcoded_data(self):
         "is view returning hardcoded data"
         resp = self.client.get(reverse('index'))
-        print resp
         self.assertTrue('42 Coffee Cups Test Assignment' in resp.content)
         self.assertTrue('Stanislav' in resp.content)
         self.assertTrue('Khvalinsky' in resp.content)
@@ -32,6 +31,7 @@ class IndexDataTests(TestCase):
         self.assertEqual(2, resp.content.count('Don\'t be disclosed'))
 
     def test_person_model(self):
+        "is model provides correct data"
         resp = self.client.get(reverse('index'))
         try:
             person = Person.objects.get(pk=1)
@@ -40,9 +40,10 @@ class IndexDataTests(TestCase):
         self.assertContains(resp, person.name)
         self.assertContains(resp, person.surname)
         # fix data representation: yyyy-mm-dd => dd.mm.yyyy
-        date = '.'.join(date_of_birth.split('-')[:-1])
+        date = person.date_of_birth.ctime()
+        date = '.'.join(date.split('-')[:-1])
         print date
-        self.assertContains(resp, person.date)
+        self.assertContains(resp, date)
         self.assertContains(resp, person.bio)
         self.assertContains(resp, person.email)
         self.assertContains(resp, person.jabber)
