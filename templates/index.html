@@ -18,15 +18,15 @@
         </div>
         <div class="row">
             <div class="col-md-6">{{ person.surname }}</div>
-            <div class="col-md-6">Email: {{person.email}}</div>
+            <div class="col-md-6">Email: <a href="mailto:{{person.email}}">{{person.email}}</a></div>
         </div>
         <div class="row">
             <div class="col-md-6"></div>
-            <div class="col-md-6">Jabber: {{ person.jabber }}</div>
+            <div class="col-md-6">Jabber: <a href="xmpp:{{ person.jabber }}?message">{{ person.jabber }}</a></div>
         </div>
         <div class="row">
             <div class="col-md-6">Date of birth: {{ person.date_of_birth|date:"d.m.Y" }}</div>
-            <div class="col-md-6">Skype: {{ person.skype }}</div>
+            <div class="col-md-6">Skype: <a href="skype:{{ person.skype }}?chat">{{ person.skype }}</a></div>
         </div>
         <div class="row">
             <div class="col-md-6">
