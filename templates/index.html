@@ -1,41 +1,41 @@
 {% extends "base.html" %} 
 
-{% block title %}42 Coffee Cups Test Assignment{%endblock%}
+{% block title %}{{ person.title }}{%endblock%}
 
 {% block body_id %} {% endblock %} 
 
 {% block body_class %} {% endblock %}
 
 {% block content %}
-	<div class='container'>
+    <div class='container'>
         <div class="row">
-            <div class="col-md-12"><h3>42 Coffee Cups Test Assignment</h3>
+            <div class="col-md-12"><h3>{{ person.title }}</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">Name: Stanislav</div>
+            <div class="col-md-6">{{ person.name }}</div>
             <div class="col-md-6">Contacts</div>
         </div>
         <div class="row">
-            <div class="col-md-6">Last name: Khvalinsky</div>
-            <div class="col-md-6">Email: <a href="mailto:s.khvalinsky@gmail.com">s.khvalinsky@gmail.com</a></div>
+            <div class="col-md-6">{{ person.surname }}</div>
+            <div class="col-md-6">Email: {{person.email}}</div>
         </div>
         <div class="row">
             <div class="col-md-6"></div>
-            <div class="col-md-6">Jabber: <a href="xmpp:stanislav_khvalinsky@42cc.co?message">stanislav_khvalinsky@42cc.co</a></div>
+            <div class="col-md-6">Jabber: {{ person.jabber }}</div>
         </div>
         <div class="row">
-            <div class="col-md-6">Date of birth: 28.09.1984</div>
-            <div class="col-md-6">Skype: <a href="skype:still.hope?chat">still.hope</a></div>
+            <div class="col-md-6">Date of birth: {{ person.date_of_birth|date:"d.m.Y" }}</div>
+            <div class="col-md-6">Skype: {{ person.skype }}</div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 Bio:<br>
-                Don't be disclosed
+                {{ person.bio }}
             </div>
             <div class="col-md-6">
                 Other contacts:<br>
-                Don't be disclosed
+                {{ person.other_contacts }}
             </div>
         </div>
     </div>
