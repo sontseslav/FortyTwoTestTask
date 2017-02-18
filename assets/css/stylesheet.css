@@ -5,5 +5,8 @@ body {
 h3 {
   text-align: left;
 }
-
+ul.bulletless{
+	list-style-type: none;
+	padding-left: 0px;
+}
 /*content end*/

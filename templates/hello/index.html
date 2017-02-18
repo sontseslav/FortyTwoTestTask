@@ -1,0 +1,40 @@
+{% extends "base.html" %} 
+
+{% block title %}{{ person.title }}{%endblock%}
+
+{% block body_id %} {% endblock %} 
+
+{% block body_class %} {% endblock %}
+
+{% block content %}
+    <div class='container'>
+        <div class="row">
+            <div class="col-md-12"><h3>{{ person.title }}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <ul class="bulletless">
+                    <li>{{ person.name }}</li>
+                    <li>{{ person.surname }}</li>
+                    <li><br></li>
+                    <li>Date of birth: {{ person.date_of_birth|date:"d.m.Y" }}</li>
+                    <li>
+                        Bio:<br>
+                        {% autoescape off %}{{ person.bio }}{% endautoescape %}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <ul class="bulletless">
+                    <li>Contacts</li>
+                    <li>Email: <a href="mailto:{{person.email}}">{{person.email}}</a></li>
+                    <li>Jabber: <a href="xmpp:{{ person.jabber }}?message">{{ person.jabber }}</a></li>
+                    <li>Skype: <a href="skype:{{ person.skype }}?chat">{{ person.skype }}</a></li>
+                    <li>Other contacts:<br>
+                    {% autoescape off %}{{ person.other_contacts }}{% endautoescape %}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

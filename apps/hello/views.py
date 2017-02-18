@@ -4,7 +4,7 @@ from apps.hello.models import Person
 
 
 class IndexView(TemplateView):
-    template_name = 'index.html'
+    template_name = 'hello/index.html'
     model = Person
     content = None
 
@@ -12,7 +12,6 @@ class IndexView(TemplateView):
         try:
             self.content = Person.objects.get(pk=1)
         except KeyError:
-            # use template
             raise Http404
         return super(IndexView, self).get(request, *args, **kwargs)
 
