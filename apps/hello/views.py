@@ -22,3 +22,22 @@ class RequestsView(ListView):
     template_name = "hello/request_list.html"
     model = HttpRequest
     content = None
+
+    def get(self, request, *args, **kwargs):
+        # insane
+        self.content = {
+                "id": "101",
+                "method": "GET",
+                "path": "/",
+                "server_protocol": "HTTP/1.1",
+                "status": 200,
+                "response_length": "12345",
+                "date": "2017-02-19T00:00:00"
+        }
+        return super(RequestsView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        content = super(RequestsView, self).get_context_data(**kwargs)
+        # insane
+        content['object_list'] = self.content
+        return content
