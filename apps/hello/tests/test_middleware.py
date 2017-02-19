@@ -1,0 +1,16 @@
+from django.test import TestCase
+from django.core.urlresolvers import reverse
+from apps.hello.models import HttpRequest
+
+
+class RequestDataTests(TestCase):
+    fixtures = ['initial_data.json']
+
+    def test_request_reachable(self):
+        "is request page reachable by url name"
+        resp = self.client.get(reverse('requests'))
+        self.assertEqual(resp.status_code, 200)
+
+    def test_hardcorded_data(self):
+        "is request page has specified data"
+        pass
