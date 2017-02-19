@@ -1,5 +1,6 @@
 from django.views.generic.base import TemplateView
-from apps.hello.models import Person
+from django.views.generic.list import ListView
+from apps.hello.models import Person, HttpRequest
 
 
 class IndexView(TemplateView):
@@ -17,5 +18,7 @@ class IndexView(TemplateView):
         return content
 
 
-class RequestsView(TemplateView):
+class RequestsView(ListView):
     template_name = "hello/request_list.html"
+    model = HttpRequest
+    content = None
