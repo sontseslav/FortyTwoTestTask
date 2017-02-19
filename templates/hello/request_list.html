@@ -1,0 +1,55 @@
+{% extends "base.html" %} 
+
+{# Add quantity of new requests #}
+{% block title %}N new requests listed{%endblock%}
+
+{% block body_id %} {% endblock %} 
+
+{% block body_class %} {% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+            <div class="col-md-12">
+            	<h3>List of 10 recent requests</h3>
+            </div>
+        </div>
+        <table class="table table-bordered">
+        	<thead>
+        		<tr>
+        			<th>ID</th>
+        			<th>Method</th>
+        			<th>Path</th>
+        			<th>Server protocol</th>
+        			<th>Response status</th>
+        			<th>Response length</th>
+                    <th>Date</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+                {% for request in object_list %}
+        		<tr>
+        			<td>{{ request.id }}</td>
+        			<td>{{ request.method }}</td>
+        			<td>{{ request.path }}</td>
+        			<td>{{ request.server_protocol }}</td>
+        			<td>{{ request.status }}</td>
+        			<td>{{ request.response_length }}</td>
+                    <td>{{ request.date|date:"d.M.Y H:i:s" }}</td>
+        		</tr>
+                {% empty %}
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <h4>Empty database!</h4>
+                {% endfor %}
+        	</tbody>
+        </table>
+	</div>
+{% endblock %} 

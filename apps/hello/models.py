@@ -14,3 +14,7 @@ class Person(models.Model):
 
     def __str__(self):
         return self.name + " " + self.surname
+
+
+class HttpRequest(models.Model):
+    pass

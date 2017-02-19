@@ -34,15 +34,13 @@ class IndexDataTests(TestCase):
         "is model provides correct data"
         resp = self.client.get(reverse('index'))
         try:
-            person = Person.objects.get(pk=1)
+            person = Person.objects.all()[:1][0]
         except Person.DoesNotExist:
             raise AssertionError("Person entity with id 1 does not exisits")
         self.assertContains(resp, person.name)
         self.assertContains(resp, person.surname)
-        # fix data representation: yyyy-mm-dd => dd.mm.yyyy
         date = person.date_of_birth.ctime()
         date = '.'.join(date.split('-')[:-1])
-        print date
         self.assertContains(resp, date)
         self.assertContains(resp, person.bio)
         self.assertContains(resp, person.email)
