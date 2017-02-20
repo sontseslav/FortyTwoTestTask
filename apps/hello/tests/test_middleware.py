@@ -16,7 +16,7 @@ class RequestDataTests(TestCase):
         print request.count()
         resp = self.client.get(reverse('requests'))
         self.assertEqual(resp.status_code, 200)
-'''
+
     def test_hardcorded_data(self):
         "Is request page has specified data/not empty"
         resp = self.client.get(reverse('requests'))
@@ -44,4 +44,3 @@ class RequestDataTests(TestCase):
         # Is request was only one?
         request = HttpRequest.objects.all()
         self.assertEqual(request.count(), 0)
-'''
