@@ -9,9 +9,6 @@ class RequestDataTests(TestCase):
 
     def test_request_reachable(self):
         "Is request page reachable by url name"
-        request = HttpRequest.objects.all()
-        for i in request:
-            i.delete()
         resp = self.client.get(reverse('requests'))
         self.assertEqual(resp.status_code, 200)
 
