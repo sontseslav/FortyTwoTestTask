@@ -9,6 +9,9 @@ class RequestDataTests(TestCase):
 
     def test_request_reachable(self):
         "Is request page reachable by url name"
+        request = HttpRequest.objects.all()
+        for i in request:
+            i.delete()
         resp = self.client.get(reverse('requests'))
         self.assertEqual(resp.status_code, 200)
 
@@ -31,8 +34,6 @@ class RequestDataTests(TestCase):
         "Is middleware registers requests"
         # Purge DB?
         request = HttpRequest.objects.all()
-        for i in request:
-            i.delete()
         self.assertEqual(request.count(), 0)
         response = self.client.get(reverse('requests'))
         request = HttpRequest.objects.order_by('date').last()
