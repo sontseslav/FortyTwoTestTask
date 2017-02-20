@@ -24,6 +24,8 @@ class HttpRequest(models.Model):
     status = models.PositiveSmallIntegerField()
     response_length = models.PositiveIntegerField()
     date = models.DateTimeField(auto_now=True, auto_now_add=True)
+    class Meta:
+        ordering = ['date']
 
     def __unicode__(self):
         return self.method + " " + self.path

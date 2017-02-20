@@ -1,6 +1,7 @@
 import re
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from apps.hello.models import HttpRequest
 
 
 class RequestDataTests(TestCase):
@@ -25,3 +26,18 @@ class RequestDataTests(TestCase):
         target = pattern.search(resp.content)
         # target not found?
         self.assertFalse(target is None)
+
+    def test_middleware_works(self):
+        "Is middleware registers requests"
+        # Purge DB?
+        request = HttpRequest.objects.all()
+        for i in request:
+            i.delete()
+        self.assertEqual(request.count(), 0)
+        response = self.client.get(reverse('requests'))
+        request = HttpRequest.objects.order_by('date').last()
+        # Catch path
+        self.assertContains(response, request.path, 1)
+        # Is request was only one?
+        request = HttpRequest.objects.all()
+        self.assertEqual(request.count(), 0)
