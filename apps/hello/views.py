@@ -18,22 +18,12 @@ class IndexView(TemplateView):
         return content
 
 
-class RequestsView(ListView):
+class RequestsView(TemplateView):
     template_name = "hello/request_list.html"
-    model = HttpRequest
     content = None
 
     def get(self, request, *args, **kwargs):
-        # insane
-        self.content = {
-                "id": "101",
-                "method": "GET",
-                "path": "/",
-                "server_protocol": "HTTP/1.1",
-                "status": 200,
-                "response_length": "12345",
-                "date": "2017-02-19T00:00:00"
-        }
+        self.content = HttpRequest.objects.all()
         return super(RequestsView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
