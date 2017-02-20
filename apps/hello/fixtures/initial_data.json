@@ -1,0 +1,28 @@
+[
+	{   "model": "auth.user",
+		"pk": 1,
+		"fields":{
+			"username": "admin",
+			"password": "pbkdf2_sha256$12000$PhSyQyNafU8H$C/EMJHJONJC0oA/hwr+5rlth07kUV6dstzcSGxGYFfg=",
+			"email": "admin@fake.email",
+			"is_superuser": true,
+			"is_staff": true,
+			"is_active": true,
+			"date_joined": "2017-01-01T00:00:1"
+		}
+	},
+	{   "model": "hello.person",
+	    "pk": 1,
+	    "fields": {
+	    	"name": "Stanislav",
+	    	"surname": "Khvalinsky",
+	    	"date_of_birth": "1984-09-28",
+	    	"bio": "Don't be disclosed",
+	    	"email": "s.khvalinsky@gmail.com",
+	    	"jabber": "stanislav_khvalinsky@42cc.co",
+	    	"skype": "still.hope",
+	    	"other_contacts": "Don't be disclosed",
+	    	"title": "42 Coffee Cups Test Assignment"
+	    }
+	}
+]
