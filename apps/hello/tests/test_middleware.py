@@ -17,9 +17,11 @@ class RequestDataTests(TestCase):
         self.assertTrue('<h4>Empty database!</h4>' not in resp.content)
 
     def test_model(self):
-    	"Is model proprly represents data. Checking by types"
-    	resp = self.client.get(reverse('requests'))
-    	pattern = re.compile(r'<td>(?P<id>\d+)</td>\W+<td>(?P<method>\w{3,5})</td>')
-    	target = pattern.search(resp.content)
-    	#target not found
-    	self.assertFalse(target is None)
+        "Is model proprly represents data. Checking by types"
+        resp = self.client.get(reverse('requests'))
+        pattern = re.compile(
+            r'<td>(?P<id>\d+)</td>\W+<td>(?P<method>\w{3,5})</td>'
+        )
+        target = pattern.search(resp.content)
+        # target not found?
+        self.assertFalse(target is None)

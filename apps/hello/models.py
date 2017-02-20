@@ -17,4 +17,13 @@ class Person(models.Model):
 
 
 class HttpRequest(models.Model):
-    pass
+    # max - CONNECT
+    method = models.CharField(max_length=7)
+    path = models.CharField(max_length=255)
+    server_protocol = models.CharField(max_length=12)
+    status = models.PositiveSmallIntegerField()
+    response_length = models.PositiveIntegerField()
+    date = models.DateTimeField(auto_now=True, auto_now_add=True)
+
+    def __unicode__(self):
+        return self.method + " " + self.path

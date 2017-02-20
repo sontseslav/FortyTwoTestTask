@@ -18,8 +18,9 @@ class IndexView(TemplateView):
         return content
 
 
-class RequestsView(TemplateView):
+class RequestsView(ListView):
     template_name = "hello/request_list.html"
+    model = HttpRequest
     content = None
 
     def get(self, request, *args, **kwargs):
@@ -28,6 +29,5 @@ class RequestsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         content = super(RequestsView, self).get_context_data(**kwargs)
-        # insane
         content['object_list'] = self.content
         return content

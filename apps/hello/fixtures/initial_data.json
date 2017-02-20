@@ -24,5 +24,16 @@
 	    	"other_contacts": "Don't be disclosed",
 	    	"title": "42 Coffee Cups Test Assignment"
 	    }
+	},
+	{	"model": "hello.httprequest",
+		"pk": 1,
+		"fields": {
+			"method": "GET",
+			"path": "/",
+			"server_protocol": "HTTP/1.1",
+			"status": 200,
+			"response_length": 1245,
+			"date": "2017-02-20T10:31:25"
+		}
 	}
 ]
