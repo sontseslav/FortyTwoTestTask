@@ -12,11 +12,6 @@ class RequestDataTests(TestCase):
         resp = self.client.get(reverse('requests'))
         self.assertEqual(resp.status_code, 200)
 
-    def test_hardcorded_data(self):
-        "Is request page has specified data/not empty"
-        resp = self.client.get(reverse('requests'))
-        self.assertTrue('<h4>Empty database!</h4>' not in resp.content)
-
     def test_model(self):
         "Is model proprly represents data. Checking by types"
         resp = self.client.get(reverse('requests'))
