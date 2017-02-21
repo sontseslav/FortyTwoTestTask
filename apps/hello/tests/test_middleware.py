@@ -14,7 +14,16 @@ class RequestDataTests(TestCase):
 
     def test_model(self):
         "Is model proprly represents data. Checking by types"
+        request = HttpRequest(
+            method = "GET",
+            path = "/",
+            server_protocol = "HTTP/1.1",
+            status = 200,
+            response_length = 1245
+        )
+        request.save()
         resp = self.client.get(reverse('requests'))
+        print resp
         pattern = re.compile(
             r'<td>(?P<id>\d+)</td>\W+<td>(?P<method>\w{3,5})</td>'
         )
@@ -28,6 +37,7 @@ class RequestDataTests(TestCase):
         request = HttpRequest.objects.all()
         self.assertEqual(request.count(), 0)
         response = self.client.get(reverse('requests'))
+        print response
         request = HttpRequest.objects.order_by('date').last()
         # Catch path
         self.assertContains(response, request.path, 1)
