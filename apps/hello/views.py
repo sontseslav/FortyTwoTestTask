@@ -21,7 +21,6 @@ class IndexView(TemplateView):
 class RequestsView(ListView):
     template_name = "hello/request_list.html"
     model = HttpRequest
-    content = None
 
     def get(self, request, *args, **kwargs):
         return super(RequestsView, self).get(request, *args, **kwargs)
