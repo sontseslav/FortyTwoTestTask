@@ -12,5 +12,5 @@ class Person(models.Model):
     other_contacts = models.CharField(max_length=200)
     title = models.CharField(max_length=50)
 
-    def __str__(self):
-        return self.name + " " + self.surname
+    def __unicode__(self):
+        return unicode(self.name + " " + self.surname)
