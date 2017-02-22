@@ -12,7 +12,8 @@ class ReqRespMiddleware(object):
     def process_response(self, request, response):
         self.status = response.status_code
         self.response_length = len(response.content)
-        myresp = MyHttpRequest(method=self.method, path=self.path,
+        myresp = MyHttpRequest(method=self.method,
+                               path=self.path,
                                server_protocol=self.server_protocol,
                                status=self.status,
                                response_length=self.response_length)

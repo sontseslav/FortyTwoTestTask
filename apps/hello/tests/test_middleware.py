@@ -30,6 +30,7 @@ class RequestDataTests(TestCase):
         # target not found?
         self.assertFalse(target is None)
 
+
 def test_middleware_works_not_AJAX(self):
         "Is middleware registers requests"
         request = MyHttpRequest.objects.all()
