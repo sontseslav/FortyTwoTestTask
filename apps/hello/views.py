@@ -28,6 +28,4 @@ class RequestsView(ListView):
 
     def get_context_data(self, **kwargs):
         content = super(RequestsView, self).get_context_data(**kwargs)
-        # self.content = HttpRequest.objects.all()
-        # content['object_list'] = self.content
         return content

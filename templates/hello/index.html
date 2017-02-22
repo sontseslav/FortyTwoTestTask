@@ -21,7 +21,9 @@
                     <li>Date of birth: {{ person.date_of_birth|date:"d.m.Y" }}</li>
                     <li>
                         Bio:<br>
-                        {% autoescape off %}{{ person.bio }}{% endautoescape %}
+                        {% autoescape off %}
+                        {{ person.bio }}
+                        {% endautoescape %}
                     </li>
                 </ul>
             </div>
@@ -32,7 +34,9 @@
                     <li>Jabber: <a href="xmpp:{{ person.jabber }}?message">{{ person.jabber }}</a></li>
                     <li>Skype: <a href="skype:{{ person.skype }}?chat">{{ person.skype }}</a></li>
                     <li>Other contacts:<br>
-                    {% autoescape off %}{{ person.other_contacts }}{% endautoescape %}</li>
+                    {% autoescape off %}
+                    {{ person.other_contacts }}
+                    {% endautoescape %}</li>
                 </ul>
             </div>
         </div>
