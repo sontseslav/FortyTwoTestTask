@@ -1,7 +1,7 @@
 import re
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from apps.hello.models import HttpRequest
+from apps.hello.models import MyHttpRequest
 
 
 class RequestDataTests(TestCase):
@@ -14,7 +14,7 @@ class RequestDataTests(TestCase):
 
     def test_model(self):
         "Is model proprly represents data. Checking by types"
-        request = HttpRequest(
+        request = MyHttpRequest(
             method="GET",
             path="/",
             server_protocol="HTTP/1.1",

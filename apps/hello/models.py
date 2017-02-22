@@ -13,10 +13,10 @@ class Person(models.Model):
     title = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return self.name + " " + self.surname
+        return unicode(self.name + " " + self.surname)
 
 
-class HttpRequest(models.Model):
+class MyHttpRequest(models.Model):
     method = models.CharField(max_length=7)
     path = models.CharField(max_length=255)
     server_protocol = models.CharField(max_length=12)
@@ -28,4 +28,4 @@ class HttpRequest(models.Model):
         ordering = ['date']
 
     def __unicode__(self):
-        return self.method + " " + self.path
+        return unicode(str(self.id) + " " + self.method + " " + self.path)

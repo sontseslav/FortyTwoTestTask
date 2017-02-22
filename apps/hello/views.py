@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
-from apps.hello.models import Person, HttpRequest
+from apps.hello.models import Person, MyHttpRequest
 
 
 class IndexView(TemplateView):
@@ -20,7 +20,7 @@ class IndexView(TemplateView):
 
 class RequestsView(ListView):
     template_name = "hello/request_list.html"
-    model = HttpRequest
+    model = MyHttpRequest
 
     def get(self, request, *args, **kwargs):
         return super(RequestsView, self).get(request, *args, **kwargs)
