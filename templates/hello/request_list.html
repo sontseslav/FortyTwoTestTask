@@ -1,7 +1,7 @@
 {% extends "base.html" %} 
 
 {# Add quantity of new requests #}
-{% block title %}N new requests listed{%endblock%}
+{% block title %}{{ object_list.count }} new requests listed{%endblock%}
 
 {% block body_id %} {% endblock %} 
 
