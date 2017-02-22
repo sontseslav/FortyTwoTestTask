@@ -39,7 +39,6 @@ class IndexDataTests(TestCase):
             raise AssertionError("Person entity with id 1 does not exisits")
         self.assertContains(resp, person.name)
         self.assertContains(resp, person.surname)
-        # fix data representation: yyyy-mm-dd => dd.mm.yyyy
         date = person.date_of_birth.ctime()
         date = '.'.join(date.split('-')[:-1])
         print date
