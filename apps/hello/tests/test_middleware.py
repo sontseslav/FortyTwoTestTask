@@ -29,3 +29,15 @@ class RequestDataTests(TestCase):
         target = pattern.search(resp.content)
         # target not found?
         self.assertFalse(target is None)
+
+def test_middleware_works_not_AJAX(self):
+        "Is middleware registers requests"
+        request = MyHttpRequest.objects.all()
+        self.assertEqual(request.count(), 0)
+        self.client.get(reverse('requests'))
+        response = self.client.get(reverse('requests'))
+        request = MyHttpRequest.objects.order_by('date').last()
+        self.assertContains(response, request.path, 1)
+        request = MyHttpRequest.objects.all()
+        # request had been sent 2 times
+        self.assertEqual(request.count(), 2)
