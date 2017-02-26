@@ -30,8 +30,7 @@ class RequestDataTests(TestCase):
         # target not found?
         self.assertFalse(target is None)
 
-
-def test_middleware_works_not_AJAX(self):
+    def test_middleware_works_not_AJAX(self):
         "Is middleware registers requests"
         request = MyHttpRequest.objects.all()
         self.assertEqual(request.count(), 0)
@@ -42,3 +41,13 @@ def test_middleware_works_not_AJAX(self):
         request = MyHttpRequest.objects.all()
         # request had been sent 2 times
         self.assertEqual(request.count(), 2)
+
+    def test_view_limit(self):
+        "Is request page shows only 10 last requests"
+        for i in range(10):
+            self.client.get(reverse('index'))
+            self.client.get(reverse('requests'))
+        requests = MyHttpRequest.objects.all()
+        self.assertEqual(requests.count(), 20)
+        response = self.client.get(reverse('requests'))
+        self.assertEqual(response.context['object_list'].count(), 10)

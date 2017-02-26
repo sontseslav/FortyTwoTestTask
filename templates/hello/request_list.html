@@ -17,25 +17,24 @@
         <table class="table table-bordered">
         	<thead>
         		<tr>
-        			<th>ID</th>
+                    <th>Date</th>
         			<th>Method</th>
         			<th>Path</th>
         			<th>Server protocol</th>
         			<th>Response status</th>
         			<th>Response length</th>
-                    <th>Date</th>
         		</tr>
         	</thead>
         	<tbody>
                 {% for request in object_list %}
         		<tr>
+                    <td>{{ request.date|date:"d.M.Y H:i:s" }}</td>
         			<td>{{ request.id }}</td>
         			<td>{{ request.method }}</td>
         			<td>{{ request.path }}</td>
         			<td>{{ request.server_protocol }}</td>
         			<td>{{ request.status }}</td>
         			<td>{{ request.response_length }}</td>
-                    <td>{{ request.date|date:"d.M.Y H:i:s" }}</td>
         		</tr>
                 {% empty %}
                 <tr>

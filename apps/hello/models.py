@@ -25,7 +25,12 @@ class MyHttpRequest(models.Model):
     date = models.DateTimeField(auto_now=True, auto_now_add=True)
 
     class Meta:
-        ordering = ['date']
+        # Descending order - newest first.
+        ordering = ['-date']
 
     def __unicode__(self):
-        return unicode(str(self.id) + " " + self.method + " " + self.path)
+        return unicode(
+            self.date.strftime("%d/%b/%Y %H:%M:%S")
+            + " " + self.method
+            + " " + self.path
+        )
