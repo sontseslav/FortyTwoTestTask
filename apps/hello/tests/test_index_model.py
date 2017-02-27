@@ -6,7 +6,6 @@ from apps.hello.models import Person
 class IndexModelTests(TestCase):
     fixtures = ['initial_data.json']
 
-
     def test_person_model(self):
         "is model provides correct data"
         resp = self.client.get(reverse('index'))

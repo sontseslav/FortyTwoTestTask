@@ -29,7 +29,6 @@
                 {% for request in object_list %}
         		<tr>
                     <td>{{ request.date|date:"d.M.Y H:i:s" }}</td>
-        			<td>{{ request.id }}</td>
         			<td>{{ request.method }}</td>
         			<td>{{ request.path }}</td>
         			<td>{{ request.server_protocol }}</td>

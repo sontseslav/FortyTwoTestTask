@@ -26,6 +26,10 @@ class RequestsView(ListView):
     def get(self, request, *args, **kwargs):
         # Desc order - first 10 requests
         self.content = MyHttpRequest.objects.all()[:10]
+        # matching all requests as viewed
+        for request in self.content:
+            request.viewed = True
+            request.save()
         return super(RequestsView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
