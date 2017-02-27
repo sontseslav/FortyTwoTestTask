@@ -1,5 +1,5 @@
 {% extends "base.html" %} 
-
+{% load staticfiles %}
 {# Add quantity of new requests #}
 {% block title %}{{ object_list.count }} new requests listed{%endblock%}
 
@@ -50,4 +50,5 @@
         	</tbody>
         </table>
 	</div>
+    <script type="text/javascript" src="{% static 'js/requests.js' %}"></script>
 {% endblock %} 
