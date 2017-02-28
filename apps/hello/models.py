@@ -12,5 +12,8 @@ class Person(models.Model):
     other_contacts = models.CharField(max_length=200)
     title = models.CharField(max_length=50)
 
+    class Meta:
+        verbose_name_plural = "persons"
+
     def __unicode__(self):
         return unicode(self.name + " " + self.surname)
