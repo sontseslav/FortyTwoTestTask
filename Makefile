@@ -3,7 +3,7 @@ SETTINGS=fortytwo_test_task.settings
 
 test: check_noqa
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) convert_to_south hello
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) migrate hello 0001 --fake
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) migrate hello
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) test
 	flake8 --exclude '*migrations*,fortytwo_test_task/settings/__init__.py' \
 	--max-complexity=6 apps fortytwo_test_task
