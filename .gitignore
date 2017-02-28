@@ -1,19 +1,9 @@
-*.sqlite3
-*.pyc
-*.pyo
-*.swp
-*.swo
-*.swn
-*.esproj
-.idea
-.Ds_Store
-*~
-git_ignore
-build
-.noseids
-media
-static
-*.dat
-.env
 .directory
+<<<<<<< HEAD
 mockup
+=======
+.env/
+*.pyc
+*.sqlite3
+migrations
+>>>>>>> 989b607d03a7483a735f6b27304ce786b4b9a17a
