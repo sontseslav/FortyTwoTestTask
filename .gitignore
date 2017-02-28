@@ -5,5 +5,4 @@ mockup
 .env/
 *.pyc
 *.sqlite3
-migrations
 >>>>>>> 989b607d03a7483a735f6b27304ce786b4b9a17a
