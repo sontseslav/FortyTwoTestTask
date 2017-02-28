@@ -23,6 +23,7 @@ class MyHttpRequest(models.Model):
     status = models.PositiveSmallIntegerField()
     response_length = models.PositiveIntegerField()
     date = models.DateTimeField(auto_now=True, auto_now_add=True)
+    viewed = models.BooleanField(default=False)
 
     class Meta:
         # Descending order - newest first.
@@ -33,4 +34,5 @@ class MyHttpRequest(models.Model):
             self.date.strftime("%d/%b/%Y %H:%M:%S")
             + " " + self.method
             + " " + self.path
+            + " " + self.viewed
         )
