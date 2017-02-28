@@ -1,0 +1,5 @@
+.directory
+.env/
+*.pyc
+*.sqlite3
+migrations
