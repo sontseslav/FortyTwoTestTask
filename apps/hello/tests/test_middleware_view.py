@@ -13,9 +13,8 @@ class RequestDataTests(TestCase):
 
     def test_view_limit(self):
         "Is request page shows only 10 last requests"
-        for i in range(10):
+        for i in range(20):
             self.client.get(reverse('index'))
-            self.client.get(reverse('requests'))
         requests = MyHttpRequest.objects.all()
         self.assertEqual(requests.count(), 20)
         response = self.client.get(reverse('requests'))
