@@ -1,26 +1,32 @@
-import re
+import datetime
 from django.test import TestCase
-from django.core.urlresolvers import reverse
 from apps.hello.models import MyHttpRequest
 
 
 class RequestModelTests(TestCase):
-    fixtures = ['initial_data.json']
+    '''look to the test from t1_mockup'''
 
     def test_model(self):
-        "Is model proprly represents data. Checking by types"
+        "Is model constructed proprly"
         request = MyHttpRequest(
             method="GET",
             path="/",
             server_protocol="HTTP/1.1",
             status=200,
-            response_length=1245
+            response_length=1245,
+            date=datetime.datetime.now(),
+            viewed=False
         )
-        request.save()
-        resp = self.client.get(reverse('requests'))
-        pattern = re.compile(
-            r'<td>(?P<id>\d+)</td>\W+<td>(?P<method>\w{3,5})</td>'
-        )
-        target = pattern.search(resp.content)
-        # target not found?
-        self.assertFalse(target is None)
+        self.assertEqual(
+            str(request),
+            request.date.strftime("%d/%b/%Y %H:%M:%S")
+            + " " + request.method
+            + " " + request.path
+            + " viewed: " + str(request.viewed)
+            )
+        self.assertTrue(
+            type(request.date) is datetime.datetime
+            and type(request.method) is str
+            and type(request.viewed) is bool
+            )
+        self.assertEqual(str(MyHttpRequest._meta.ordering), "['-date']")

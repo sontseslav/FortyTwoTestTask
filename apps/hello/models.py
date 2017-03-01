@@ -37,5 +37,5 @@ class MyHttpRequest(models.Model):
             self.date.strftime("%d/%b/%Y %H:%M:%S")
             + " " + self.method
             + " " + self.path
-            + " viewed: " + self.viewed
+            + " viewed: " + str(self.viewed)
         )

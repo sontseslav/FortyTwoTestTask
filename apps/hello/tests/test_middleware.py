@@ -4,7 +4,6 @@ from apps.hello.models import MyHttpRequest
 
 
 class RequestMiddlewareTests(TestCase):
-    fixtures = ['initial_data.json']
 
     def test_middleware_works(self):
         "Is middleware registers requests"

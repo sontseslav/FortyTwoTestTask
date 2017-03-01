@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from apps.hello.models import Person
@@ -15,37 +16,42 @@ class IndexViewTests(TestCase):
         resp = self.client.get(reverse('admin:index'))
         self.assertEqual(resp.status_code, 200)
 
-    def test_model_representation(self):
-        "Is model provides correct data"
+    def test_entries_check(self):
+        "What if no person or two persons"
+        # no data provided
         resp = self.client.get(reverse('index'))
-        person = Person.objects.first()
-        self.assertTrue(person != None)
-        self.assertContains(resp, person.name)
-        self.assertContains(resp, person.surname)
-        date = person.date_of_birth.ctime()
-        date = '.'.join(date.split('-')[:-1])
-        self.assertContains(resp, date)
-        self.assertContains(resp, person.bio)
-        self.assertContains(resp, person.email)
-        self.assertContains(resp, person.jabber)
-        self.assertContains(resp, person.skype)
-        self.assertContains(resp, person.other_contacts)
-        self.assertContains(resp, person.title)
-
-    def test_entries_count(self):
-        "Is person only one"
-        counter = Person.objects.all().count()
-        print Person.objects.all()
-        print counter
-        self.assertTrue(counter == 1)
+        self.assertContains(resp, "No etntry exists")
+        # two entries added
+        for i in range(2):
+            person = Person(
+                name="George",
+                surname="Petersen",
+                date_of_birth="1984-09-28",
+                bio="Some data",
+                email="aaa@bbb.ccc",
+                jabber="jabber@domain.com",
+                skype="test",
+                other_contacts="other contacts",
+                title="Test title # " + str(i+1)
+            )
+            person.save()
+        resp = self.client.get(reverse('index'))
+        # only first displayed
+        self.assertContains(resp, "Test title # 1")
 
     def test_cyrillic(self):
-        "Is DB has cyrillic strings"
-        persons = Person.objects.all()
-        for p in persons:
-            for f in p._meta.get_all_field_names():
-                field = getattr(p, f, None)
-                try:
-                    str(field).decode('ascii')
-                except UnicodeDecodeError:
-                    raise AssertionError("Cyrillic fields not allowed")
+        "If DB has cyrillic strings"
+        person = Person(
+            name=u"Іван",
+            surname=u"Іваненко",
+            date_of_birth="1984-09-28",
+            bio=u"Щось",
+            email="aaa@bbb.ccc",
+            jabber="jabber@domain.com",
+            skype=u"test",
+            other_contacts=u"Ще щось",
+            title=u"Тест"
+            )
+        person.save()
+        resp = self.client.get(reverse('index'))
+        self.assertContains(resp, u"Тест")

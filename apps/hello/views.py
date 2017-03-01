@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from apps.hello.models import Person, MyHttpRequest
@@ -10,6 +11,13 @@ class IndexView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         self.content = Person.objects.first()
+        if not self.content:
+            return render(
+                          request,
+                          '404.html',
+                          {'message': 'No etntry exists'},
+                          content_type='application/xhtml+xml'
+                          )
         return super(IndexView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
