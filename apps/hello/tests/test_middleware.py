@@ -13,7 +13,7 @@ class RequestMiddlewareTests(TestCase):
         self.client.get(reverse('requests'))
         response = self.client.get(reverse('requests'))
         request = MyHttpRequest.objects.order_by('date').last()
-        self.assertContains(response, request.path, 1)
+        self.assertContains(response, request.path, 2)
         request = MyHttpRequest.objects.all()
         # request had been sent 2 times
         self.assertEqual(request.count(), 2)

@@ -9,7 +9,7 @@ class IndexView(TemplateView):
     content = None
 
     def get(self, request, *args, **kwargs):
-        self.content = Person.objects.get(pk=1)
+        self.content = Person.objects.first()
         return super(IndexView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
