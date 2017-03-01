@@ -32,6 +32,7 @@ class Migration(SchemaMigration):
             ('status', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
             ('response_length', self.gf('django.db.models.fields.PositiveIntegerField')()),
             ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, auto_now_add=True, blank=True)),
+            ('viewed', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal(u'hello', ['MyHttpRequest'])
 
@@ -53,7 +54,8 @@ class Migration(SchemaMigration):
             'path': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'response_length': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'server_protocol': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
-            'status': ('django.db.models.fields.PositiveSmallIntegerField', [], {})
+            'status': ('django.db.models.fields.PositiveSmallIntegerField', [], {}),
+            'viewed': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         },
         u'hello.person': {
             'Meta': {'object_name': 'Person'},
