@@ -1,4 +1,5 @@
 .directory
+mockup
 .env/
 *.pyc
 *.sqlite3
