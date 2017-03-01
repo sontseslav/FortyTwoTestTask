@@ -16,20 +16,6 @@ class IndexViewTests(TestCase):
         resp = self.client.get(reverse('admin:index'))
         self.assertEqual(resp.status_code, 200)
 
-    def test_index_hardcoded_data(self):
-        "Is view returning hardcoded data"
-        resp = self.client.get(reverse('index'))
-        self.assertTrue('42 Coffee Cups Test Assignment' in resp.content)
-        self.assertTrue('Stanislav' in resp.content)
-        self.assertTrue('Khvalinsky' in resp.content)
-        self.assertTrue('s.khvalinsky@gmail.com' in resp.content)
-        self.assertTrue(
-            'stanislav_khvalinsky@42cc.co' in resp.content
-        )
-        self.assertTrue('28.09.1984' in resp.content)
-        self.assertTrue('still.hope' in resp.content)
-        self.assertEqual(2, resp.content.count('Don\'t be disclosed'))
-
     def test_model_representation(self):
         "Is model provides correct data"
         resp = self.client.get(reverse('index'))
@@ -52,7 +38,7 @@ class IndexViewTests(TestCase):
     def test_entries_count(self):
         "Is person only one"
         counter = Person.objects.all().count()
-        self.assertTrue(counter > 0 and counter < 2)
+        self.assertTrue(counter == 1)
 
     def test_cyrillic(self):
         "Is DB has cyrillic strings"

@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.core.exceptions import ValidationError
 from apps.hello.models import Person
 
 
@@ -21,3 +22,5 @@ class IndexModelTests(TestCase):
         self.assertTrue(type(person.name) is str and
                         type(person.surname) is str)
         self.assertEqual(str(Person._meta.verbose_name_plural), "persons")
+        person.date_of_birth = "hhh"
+        self.assertRaises(ValidationError, lambda: person.save())
