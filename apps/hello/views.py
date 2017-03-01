@@ -12,7 +12,8 @@ class IndexView(TemplateView):
         self.content = Person.objects.first()
         if not self.content:
             return render(
-                          request, '404.html',
+                          request,
+                          '404.html',
                           {'message': 'No etntry exists'},
                           content_type='application/xhtml+xml'
                           )
