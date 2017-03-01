@@ -23,6 +23,7 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'hello', ['Person'])
 
+<<<<<<< HEAD
         # Adding model 'MyHttpRequest'
         db.create_table(u'hello_myhttprequest', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -35,11 +36,14 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'hello', ['MyHttpRequest'])
 
+=======
+>>>>>>> 0915e9e1c73b39f1dd5550bd77259accc1d3191c
 
     def backwards(self, orm):
         # Deleting model 'Person'
         db.delete_table(u'hello_person')
 
+<<<<<<< HEAD
         # Deleting model 'MyHttpRequest'
         db.delete_table(u'hello_myhttprequest')
 
@@ -55,6 +59,10 @@ class Migration(SchemaMigration):
             'server_protocol': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
             'status': ('django.db.models.fields.PositiveSmallIntegerField', [], {})
         },
+=======
+
+    models = {
+>>>>>>> 0915e9e1c73b39f1dd5550bd77259accc1d3191c
         u'hello.person': {
             'Meta': {'object_name': 'Person'},
             'bio': ('django.db.models.fields.TextField', [], {}),

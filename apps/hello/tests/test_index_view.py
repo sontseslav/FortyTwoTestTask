@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from apps.hello.models import Person
 
 
 class IndexViewTests(TestCase):
@@ -28,3 +29,38 @@ class IndexViewTests(TestCase):
         self.assertTrue('28.09.1984' in resp.content)
         self.assertTrue('still.hope' in resp.content)
         self.assertEqual(2, resp.content.count('Don\'t be disclosed'))
+
+    def test_model_representation(self):
+        "Is model provides correct data"
+        resp = self.client.get(reverse('index'))
+        try:
+            person = Person.objects.get(pk=1)
+        except Person.DoesNotExist:
+            raise AssertionError("Person entity with id 1 does not exisits")
+        self.assertContains(resp, person.name)
+        self.assertContains(resp, person.surname)
+        date = person.date_of_birth.ctime()
+        date = '.'.join(date.split('-')[:-1])
+        self.assertContains(resp, date)
+        self.assertContains(resp, person.bio)
+        self.assertContains(resp, person.email)
+        self.assertContains(resp, person.jabber)
+        self.assertContains(resp, person.skype)
+        self.assertContains(resp, person.other_contacts)
+        self.assertContains(resp, person.title)
+
+    def test_entries_count(self):
+        "Is person only one"
+        counter = Person.objects.all().count()
+        self.assertTrue(counter > 0 and counter < 2)
+
+    def test_cyrillic(self):
+        "Is DB has cyrillic strings"
+        persons = Person.objects.all()
+        for p in persons:
+            for f in p._meta.get_all_field_names():
+                field = getattr(p, f, None)
+                try:
+                    str(field).decode('ascii')
+                except UnicodeDecodeError:
+                    raise AssertionError("Cyrillic fields not allowed")
