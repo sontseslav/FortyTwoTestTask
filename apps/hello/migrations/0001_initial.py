@@ -8,25 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-
-        # Adding model 'MyHttpRequest'
-        db.create_table(u'hello_myhttprequest', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('method', self.gf('django.db.models.fields.CharField')(max_length=7)),
-            ('path', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('server_protocol', self.gf('django.db.models.fields.CharField')(max_length=12)),
-            ('status', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
-            ('response_length', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, auto_now_add=True, blank=True)),
-            ('viewed', self.gf('django.db.models.fields.BooleanField')(default=False)),
-        ))
-        db.send_create_signal(u'hello', ['MyHttpRequest'])
+        # Adding field 'MyHttpRequest.viewed'
+        db.add_column(u'hello_myhttprequest', 'viewed',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-
-        # Deleting model 'MyHttpRequest'
-        db.delete_table(u'hello_myhttprequest')
+        # Deleting field 'MyHttpRequest.viewed'
+        db.delete_column(u'hello_myhttprequest', 'viewed')
 
 
     models = {
@@ -40,7 +30,20 @@ class Migration(SchemaMigration):
             'server_protocol': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
             'status': ('django.db.models.fields.PositiveSmallIntegerField', [], {}),
             'viewed': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
+        },
+        u'hello.person': {
+            'Meta': {'object_name': 'Person'},
+            'bio': ('django.db.models.fields.TextField', [], {}),
+            'date_of_birth': ('django.db.models.fields.DateField', [], {}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '50'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'jabber': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '25'}),
+            'other_contacts': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'skype': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'surname': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         }
     }
 
-    complete_apps = ['hello']
+complete_apps = ['hello'] 
