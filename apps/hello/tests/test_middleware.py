@@ -11,6 +11,7 @@ class RequestMiddlewareTests(TestCase):
         self.assertEqual(request.count(), 0)
         self.client.get(reverse('requests'))
         response = self.client.get(reverse('requests'))
+        # reverse initial order
         request = MyHttpRequest.objects.order_by('date').last()
         self.assertContains(response, request.path, 2)
         request = MyHttpRequest.objects.all()
