@@ -5,7 +5,6 @@ class ReqRespMiddleware(object):
 
     def process_request(self, request):
         self.method = request.META['REQUEST_METHOD']
-        # path_info
         self.path = request.path_info
         self.server_protocol = request.META['SERVER_PROTOCOL']
 
