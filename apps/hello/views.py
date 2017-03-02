@@ -35,9 +35,7 @@ class RequestsView(ListView):
         # Desc order - first 10 nonviewed requests
         self.content = MyHttpRequest.objects.filter(
             viewed=False
-            ).order_by(
-            'date'
-            )[:10]
+            ).order_by('date')[:10]
         return super(RequestsView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
