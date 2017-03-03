@@ -20,7 +20,7 @@ class IndexViewTests(TestCase):
         "What if no person or two persons"
         # no data provided
         resp = self.client.get(reverse('index'))
-        self.assertContains(resp, "No etntry exists")
+        self.assertContains(resp, "Empty database")
         # two entries added
         for i in range(2):
             person = Person(
@@ -37,8 +37,16 @@ class IndexViewTests(TestCase):
             person.save()
         resp = self.client.get(reverse('index'))
         # only first displayed
-        # context has name
+        # context check
         self.assertEquals(resp.context['person'].name, "George")
+        self.assertEquals(resp.context['person'].surname, "Petersen")
+        self.assertEquals(resp.context['person'].date_of_birth, "1984-09-28")
+        self.assertEquals(resp.context['person'].bio, "Some data")
+        self.assertEquals(resp.context['person'].email, "aaa@bbb.ccc")
+        self.assertEquals(resp.context['person'].jabber, "jabber@domain.com")
+        self.assertEquals(resp.context['person'].skype, "test")
+        self.assertEquals(resp.context['person'].other_contacts, "other contacts")
+        self.assertEquals(resp.context['person'].title, "Test title # 1")
         # template puts context values in right places
 
         self.assertContains(resp, "Test title # 1")
@@ -60,19 +68,10 @@ class IndexViewTests(TestCase):
         resp = self.client.get(reverse('index'))
         self.assertContains(resp, u"Тест")
 
-    def test_DB(self):
-        "Is DB empty?"
-        person = Person(
-            name="George",
-            surname="Petersen",
-            date_of_birth="1984-09-28",
-            bio="Some data",
-            email="aaa@bbb.ccc",
-            jabber="jabber@domain.com",
-            skype="test",
-            other_contacts="other contacts",
-            title="Test title # 1"
-        )
-        person.save()
-        person = Person.objects.first()
-        self.assertTrue(person)
+    def test_empty_DB(self):
+        "If DB empty"
+        # DB test - returns none
+        self.assertEquals(None, Person.objects.first())
+        # context test - passes None to template
+        resp = self.client.get(reverse('index'))
+        self.assertEquals(None, resp.context['person'])

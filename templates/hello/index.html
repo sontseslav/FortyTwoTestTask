@@ -1,6 +1,6 @@
 {% extends "base.html" %} 
 
-{% block title %}{{ person.title }}{%endblock%}
+{% block title %}42 Coffee Cups Test Assignment - Main{%endblock%}
 
 {% block body_id %} {% endblock %} 
 
@@ -8,9 +8,11 @@
 
 {% block content %}
     <div class='container'>
+        {% ifnotequal person None %}
         <div class="row">
-            <div class="col-md-12"><h3>{{ person.title }}</h3>
-        </div>
+            <div class="col-md-12">
+                <h3>{{ person.title }}</h3>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -40,5 +42,8 @@
                 </ul>
             </div>
         </div>
+        {% else %}
+        <h1>Empty database</h1>
+        {% endifnotequal %}
     </div>
 {% endblock %}
