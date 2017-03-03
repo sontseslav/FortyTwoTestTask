@@ -8,6 +8,7 @@
 {% block body_class %} {% endblock %}
 
 {% block content %}
+{% csrf_token %}
 	<div class="container">
 		<div class="row">
             <div class="col-md-12">
@@ -36,19 +37,12 @@
         			<td>{{ request.response_length }}</td>
         		</tr>
                 {% empty %}
-                <tr>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
                 <h4>Empty database!</h4>
                 {% endfor %}
         	</tbody>
         </table>
 	</div>
-    <script type="text/javascript" src="{% static 'js/requests.js' %}"></script>
 {% endblock %} 
+{% block javascript %}
+    <script type="text/javascript" src="{% static 'js/requests.js' %}"></script>
+{% endblock %}

@@ -1,4 +1,7 @@
+import json
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.core import serializers
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from apps.hello.models import Person, MyHttpRequest
@@ -46,3 +49,17 @@ class RequestsView(ListView):
             request.viewed = True
             request.save()
         return content
+
+    def post(self, request, *args, **kwargs):
+        self.content = MyHttpRequest.objects.filter(
+            viewed=False
+            ).order_by('date')[:10]
+        print self.content
+        response = serializers.serialize('json', self.content)
+        for request in self.content:
+            request.viewed = True
+            request.save()
+        return HttpResponse(
+            json.dumps(response),
+            content_type="application/json"
+        )
