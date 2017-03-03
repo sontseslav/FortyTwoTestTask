@@ -5,7 +5,6 @@ from apps.hello.models import Person
 
 
 class IndexViewTests(TestCase):
-    fixtures = ['initial_data.json']
 
     def test_index_reachable(self):
         "Is index page reachable by url name"
@@ -38,6 +37,10 @@ class IndexViewTests(TestCase):
             person.save()
         resp = self.client.get(reverse('index'))
         # only first displayed
+        # context has name
+        self.assertEquals(resp.context['person'].name, "George")
+        # template puts context values in right places
+
         self.assertContains(resp, "Test title # 1")
 
     def test_cyrillic(self):
@@ -56,3 +59,20 @@ class IndexViewTests(TestCase):
         person.save()
         resp = self.client.get(reverse('index'))
         self.assertContains(resp, u"Тест")
+
+    def test_DB(self):
+        "Is DB empty?"
+        person = Person(
+            name="George",
+            surname="Petersen",
+            date_of_birth="1984-09-28",
+            bio="Some data",
+            email="aaa@bbb.ccc",
+            jabber="jabber@domain.com",
+            skype="test",
+            other_contacts="other contacts",
+            title="Test title # 1"
+        )
+        person.save()
+        person = Person.objects.first()
+        self.assertTrue(person)
