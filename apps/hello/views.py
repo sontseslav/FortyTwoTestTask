@@ -42,6 +42,7 @@ class RequestsView(ListView):
         self.content = MyHttpRequest.objects.filter(
             viewed=False
             ).order_by('date')[:10]
+        # matching all requests as viewed
         for request in self.content:
             request.viewed = True
             request.save()
