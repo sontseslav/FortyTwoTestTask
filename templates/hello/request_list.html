@@ -26,7 +26,7 @@
         			<th>Response length</th>
         		</tr>
         	</thead>
-        	<tbody>
+        	<tbody id="target">
                 {% for request in object_list %}
         		<tr>
                     <td>{{ request.date|date:"d.M.Y H:i:s" }}</td>

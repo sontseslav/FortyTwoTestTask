@@ -60,8 +60,21 @@ $(function() {
 				url: "requests",
 				type : "POST",
 				data: {},
-				success: function(json) {
-					console.log(json); // log the returned json to the console
+				success: function(response) {
+					console.log(response); // log the returned data to the console
+                    var content = $("#target").html();
+                    console.log(content);
+                    content += "<tr><td>101</td><td>POST</td><td>/</td><td>HTTP/1.1</td>"
+                    +"<td>200</td><td>2612</td></tr>";
+                    var rows = (content.match(/<tr>/g) || []).length;
+                    console.log(rows);
+                    if (rows > 10) {
+                        var index = rows - 10;
+                        for (var i = 0; i < index; i++) {
+                            content = content.replace(/<tr>(.|\W)*?<\/tr>/, '');
+                        }
+                    }
+                    $("#target").html(content);
 				},
 				error : function(xhr,errmsg,err) {
 					console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
