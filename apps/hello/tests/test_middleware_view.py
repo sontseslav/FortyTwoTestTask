@@ -1,6 +1,7 @@
 import re
 import datetime
 from django.test import TestCase
+from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from apps.hello.models import MyHttpRequest
 
@@ -33,7 +34,7 @@ class RequestDataTests(TestCase):
         request.save()
         resp = self.client.get(reverse('requests'))
         pattern = re.compile(
-            r'<td>(?P<id>\d+)</td>\W+<td>(?P<method>\w{3,5})</td>'
+            r'<td>(?P<method>\w{3,5})</td>\W+<td>/(?P<path>\w+)*</td>'
         )
         target = pattern.search(resp.content)
         # target not found?
@@ -69,3 +70,40 @@ class RequestDataTests(TestCase):
         # privious request
         self.assertEqual(resp.context['object_list'].count(), 1)
         self.assertNotContains(resp, test_path)
+
+    def test_post_template(self):
+        "Is post template correct"
+        # If no others requests made - only must POST exists
+        self.client.post(reverse('requests'))
+        # Checking template for post
+        response = render_to_response(
+            'hello/post_response.html',
+            {'object_list': MyHttpRequest.objects.filter(viewed=False)[:10]},
+            content_type="text/html"
+            )
+        # Is template reachable and processed fine
+        self.assertEqual(response.status_code, 200)
+        # Is template generated non-empty content
+        self.assertNotEqual(response.content, "")
+
+    def test_post_response(self):
+        "Is post returns correct data"
+        # If no others requests made - only must POST exists
+        self.client.post(reverse('requests'))
+        response = self.client.post(reverse('requests'))
+        # object_list not empty
+        self.assertTrue(response.context['object_list'])
+        pattern = re.compile(
+            r'<td>(?P<method>\w{3,5})</td>\W+<td>/(?P<path>\w+)*</td>'
+        )
+        target = pattern.search(response.content)
+        self.assertTrue(target)
+        # on many requests
+        for x in range(1, 20):
+            self.client.get(reverse('index'))
+        # sends only 10
+        response = self.client.post(reverse('requests'))
+        # sends 10 objects in context
+        self.assertEqual(len(response.context['object_list']), 10)
+        # sends 10 rows in response
+        self.assertEqual(response.content.count('<tr>'), 10)
