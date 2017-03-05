@@ -1,0 +1,5 @@
+[run]
+source = apps/
+omit = */__init__.py
+       */migrations/*
+       .env/*
