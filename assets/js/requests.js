@@ -76,7 +76,8 @@ $(function() {
                             rows--;
                         }
                     }
-                    //console.log("content: " + content);
+                    content = content.replace(/\n/g, '');
+                    console.log("content: " + content);
                     title = $('title').text();
                     title = title.replace(/\d+/, rows);
                     $('title').text(title);
