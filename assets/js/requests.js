@@ -1,7 +1,7 @@
 $(function() {
 	// This function gets cookie with a given name
     function getCookie(name) {
-    	console.log('get cookies');
+    	//console.log('get cookies');
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {
             var cookies = document.cookie.split(';');
@@ -17,7 +17,7 @@ $(function() {
         return cookieValue;
     }
     var csrftoken = getCookie('csrftoken');
-    console.log('cookie: ' + csrftoken);
+    //console.log('cookie: ' + csrftoken);
     /*
     The functions below will create a header with csrftoken
     */
@@ -52,34 +52,41 @@ $(function() {
     });
 
 	//function for polling
-	console.log("Loaded!"); // sanity check
+	//console.log("Loaded!"); // sanity check
 	function poll() {
-		console.log("start polling");
+		//console.log("start polling");
 		setTimeout(function() {
 			$.ajax({
 				url: "requests",
 				type : "POST",
+                //empty request
 				data: {},
 				success: function(response) {
-					console.log(response); // log the returned data to the console
+					//console.log("response: " + response); // log the returned data to the console
                     var content = $("#target").html();
-                    console.log(content);
-                    content += "<tr><td>101</td><td>POST</td><td>/</td><td>HTTP/1.1</td>"
-                    +"<td>200</td><td>2612</td></tr>";
+                    //console.log("content: " + content);
+                    content += response;
                     var rows = (content.match(/<tr>/g) || []).length;
-                    console.log(rows);
+                    //console.log("rows: " + rows);
                     if (rows > 10) {
                         var index = rows - 10;
                         for (var i = 0; i < index; i++) {
+                            //removing first row
                             content = content.replace(/<tr>(.|\W)*?<\/tr>/, '');
+                            rows--;
                         }
                     }
+                    //console.log("content: " + content);
+                    title = $('title').text();
+                    title = title.replace(/\d+/, rows);
+                    $('title').text(title);
                     $("#target").html(content);
 				},
-				error : function(xhr,errmsg,err) {
-					console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+				error: function(xhr,errmsg,err) {
+                    //console.log("error: " + errmsg);
+					//console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
 				},
-				dataType: "json",
+				dataType: "html",
 				complete: poll
 			});
 		}, 5000);

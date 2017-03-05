@@ -94,7 +94,7 @@ class RequestDataTests(TestCase):
         # object_list not empty
         self.assertTrue(response.context['object_list'])
         pattern = re.compile(
-            r'<td>(?P<method>\w{3,5})</td>\W+<td>/(?P<path>\w+)*</td>'
+            r'<td>(?P<method>\w{3,5})</td>\W*<td>/(?P<path>\w+)*</td>'
         )
         target = pattern.search(response.content)
         self.assertTrue(target)
