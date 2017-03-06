@@ -4,10 +4,11 @@ from apps.hello.models import MyHttpRequest
 
 
 class RequestModelTests(TestCase):
-    '''look to the test from t1_mockup'''
 
     def test_model(self):
-        "Is model constructed proprly"
+        "Is model constructed properly: right object output, field types"
+        '''str() method is overrided, string fields had str type(),
+        boolean - bool, ordering by date descending'''
         request = MyHttpRequest(
             method="GET",
             path="/",

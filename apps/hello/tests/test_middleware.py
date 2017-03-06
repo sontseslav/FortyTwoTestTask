@@ -6,7 +6,7 @@ from apps.hello.models import MyHttpRequest
 class RequestMiddlewareTests(TestCase):
 
     def test_middleware_works(self):
-        "Is middleware registers requests"
+        "Is middleware registers requests - 2 requests creates 2 entries in DB"
         request = MyHttpRequest.objects.all()
         self.assertEqual(request.count(), 0)
         self.client.get(reverse('requests'))

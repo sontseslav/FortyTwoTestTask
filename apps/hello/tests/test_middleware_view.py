@@ -9,12 +9,12 @@ from apps.hello.models import MyHttpRequest
 class RequestDataTests(TestCase):
 
     def test_request_reachable(self):
-        "Is request page reachable by url name"
+        "Is request page reachable - returns status 200 on request"
         resp = self.client.get(reverse('requests'))
         self.assertEqual(resp.status_code, 200)
 
     def test_view_limit(self):
-        "Is request page shows only 10 last requests"
+        "Shows no more than 10 last requests regardless of their quantity"
         for i in range(20):
             self.client.get(reverse('index'))
         requests = MyHttpRequest.objects.all()
@@ -23,7 +23,9 @@ class RequestDataTests(TestCase):
         self.assertEqual(response.context['object_list'].count(), 10)
 
     def test_model_view(self):
-        "Is model proprly represents data. Checking by types"
+        "Is view proprly represents data: returns method and path"
+        '''Every request in list has string method (3-5 chars) folowed
+        by path (starts with /). Regexp pattern should not returns None'''
         request = MyHttpRequest(
             method="GET",
             path="/",
@@ -41,7 +43,9 @@ class RequestDataTests(TestCase):
         self.assertFalse(target is None)
 
     def test_viewed_requests(self):
-        "Is viewed requests displayed?"
+        "All viewed requests shouldn't showed again"
+        '''Showed requests shouldn\'t be presented in next response\'s
+        context'''
         test_path = "/test"
         request = MyHttpRequest(
             method="GET",
@@ -67,12 +71,12 @@ class RequestDataTests(TestCase):
         self.assertEqual(resp.context['object_list'].count(), 2)
         self.assertContains(resp, test_path)
         resp = self.client.get(reverse('requests'))
-        # privious request
+        # previous request
         self.assertEqual(resp.context['object_list'].count(), 1)
         self.assertNotContains(resp, test_path)
 
     def test_post_template(self):
-        "Is post template correct"
+        "Post template response status is 200 and content not empty"
         # If no others requests made - only must POST exists
         self.client.post(reverse('requests'))
         # Checking template for post
@@ -87,7 +91,11 @@ class RequestDataTests(TestCase):
         self.assertNotEqual(response.content, "")
 
     def test_post_response(self):
-        "Is post returns correct data"
+        "Post returns correct data - regex pattern not None, entries <= 10"
+        '''Every request in list has string method (3-5 chars) folowed
+        by path (starts with /). Regexp pattern should not returns None.
+        Sends no more than 10 last requests regardless of their quantity:
+        no more than 10 objects in context and rows in content'''
         # If no others requests made - only must POST exists
         self.client.post(reverse('requests'))
         response = self.client.post(reverse('requests'))
