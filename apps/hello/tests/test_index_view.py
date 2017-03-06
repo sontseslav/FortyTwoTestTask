@@ -8,17 +8,17 @@ from apps.hello.models import Person
 class IndexViewTests(TestCase):
 
     def test_index_reachable(self):
-        "Is index page reachable by url name"
+        "Is index page reachable - returns status 200 on request"
         resp = self.client.get(reverse('index'))
         self.assertEqual(resp.status_code, 200)
 
     def test_admin_reachable(self):
-        "Is index page reachable by url name"
+        "Is index page reachable - returns status 200 on request"
         resp = self.client.get(reverse('admin:index'))
         self.assertEqual(resp.status_code, 200)
 
     def test_entries_check(self):
-        "What if no person or two persons"
+        "If no person - outputs 'Empty DB', on multiply returns first"
         # no data provided
         resp = self.client.get(reverse('index'))
         self.assertContains(resp, "Empty database")
@@ -64,7 +64,8 @@ class IndexViewTests(TestCase):
         self.assertContains(resp, "Test title # 1")
 
     def test_cyrillic(self):
-        "If DB has cyrillic strings"
+        "Is view outputs cyrillic symbols properly?"
+        '''On request view returns readable cyrillic symbols. UTF-8 used.'''
         person = Person(
             name=u"Іван",
             surname=u"Іваненко",

@@ -6,7 +6,9 @@ from apps.hello.models import Person
 class IndexModelTests(TestCase):
 
     def test_model(self):
-        "Is model constructed properly"
+        "Is model constructed properly: right object output, field types"
+        '''str() method is overrided, string fields had str type(),
+        date field threw ValidationError on inappropriate input (e.g. string)'''
         person = Person(
             name="George",
             surname="Petersen",
