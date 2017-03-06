@@ -8,7 +8,7 @@ class IndexViewTests(TestCase):
     def test_empty_DB(self):
         "If DB empty"
         # DB test - returns none
-        self.assertEquals(None, Person.objects.first())
+        self.assertTrue(Person.objects.exists())
         # context test - passes None to template
         resp = self.client.get(reverse('index'))
         self.assertEquals(None, resp.context['person'])
