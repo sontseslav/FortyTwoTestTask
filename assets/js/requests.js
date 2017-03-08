@@ -66,31 +66,32 @@ $(function() {
                     var content = $("#target").html();
                     //console.log("content: " + content);
                     content += response;
-                    var rows = (content.match(/<tr>/g) || []).length;
-                    //console.log("rows: " + rows);
-                    if (rows > 10) {
-                        var index = rows - 10;
+                    var contentRows = (content.match(/<tr>/g) || []).length;
+                    var responseRows = (response.match(/<tr>/g) || []).length;
+                    //console.log("contentRows: " + contentRows);
+                    //console.log("responseRows: " + responseRows);
+                    if (contentRows > 10) {
+                        var index = contentRows - 10;
                         for (var i = 0; i < index; i++) {
                             //removing first row
                             content = content.replace(/<tr>(.|\W)*?<\/tr>/, '');
-                            rows--;
                         }
                     }
                     content = content.replace(/\n/g, '');
                     console.log("content: " + content);
                     title = $('title').text();
-                    title = title.replace(/\d+/, rows);
+                    title = title.replace(/\d+/, responseRows);
                     $('title').text(title);
                     $("#target").html(content);
 				},
 				error: function(xhr,errmsg,err) {
-                    //console.log("error: " + errmsg);
-					//console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                    console.log("error: " + errmsg);
+					console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
 				},
 				dataType: "html",
 				complete: poll
 			});
-		}, 5000);
+		}, 3000);
 	}
 	poll();
 });

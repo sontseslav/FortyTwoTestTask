@@ -8,9 +8,9 @@ class IndexModelTests(TestCase):
     def test_model(self):
         """
         Person model has right field types, input validation works
-        
-        Right object output, field types str() method is overrided, 
-        string fields had str type(), date field threw 
+
+        Right object output, field types str() method is overrided,
+        string fields had str type(), date field threw
         ValidationError on inappropriate input (e.g. string)
         """
         person = Person(

@@ -24,7 +24,7 @@ class IndexViewTests(TestCase):
     def test_entries_check(self):
         """
         Render "Empty database" if no entries exists, first entry otherwise
-        On multiple Person entries exists context contains fields 
+        On multiple Person entries exists context contains fields
         of first entry and template renders it properly
         """
         # no data provided

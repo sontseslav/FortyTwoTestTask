@@ -9,9 +9,8 @@ class RequestModelTests(TestCase):
         """
         MyHttpRequest model has right field types, odering descending
 
-        Right object output, field types str() method is overrided, 
-        string fields had str type(), entries sorted in descending
-        order
+        Right object output, field types str() method is overrided,
+        string fields had str type(), entries sorted in descending order
         """
         request = MyHttpRequest(
             method="GET",
