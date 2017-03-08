@@ -9,12 +9,16 @@ from apps.hello.models import MyHttpRequest
 class RequestDataTests(TestCase):
 
     def test_request_reachable(self):
-        "Is request page reachable by url name"
+        """
+        Make GET request to 'requests', return status 200
+        """
         resp = self.client.get(reverse('requests'))
         self.assertEqual(resp.status_code, 200)
 
     def test_view_limit(self):
-        "Is request page shows only 10 last requests"
+        """
+        View renders only 10 last requests
+        """
         for i in range(20):
             self.client.get(reverse('index'))
         requests = MyHttpRequest.objects.all()
@@ -23,7 +27,9 @@ class RequestDataTests(TestCase):
         self.assertEqual(response.context['object_list'].count(), 10)
 
     def test_model_view(self):
-        "Is model proprly represents data. Checking by types"
+        """
+        View renders data in rows, column order is right
+        """
         request = MyHttpRequest(
             method="GET",
             path="/",
@@ -38,10 +44,12 @@ class RequestDataTests(TestCase):
         )
         target = pattern.search(resp.content)
         # target not found?
-        self.assertFalse(target is None)
+        self.assertTrue(target)
 
     def test_viewed_requests(self):
-        "Is viewed requests displayed?"
+        """
+        View renders only unviewed requests only once
+        """
         test_path = "/test"
         request = MyHttpRequest(
             method="GET",
@@ -72,7 +80,9 @@ class RequestDataTests(TestCase):
         self.assertNotContains(resp, test_path)
 
     def test_post_template(self):
-        "Is post template correct"
+        """
+        POST response template exists, view generates non-empty context
+        """
         # If no others requests made - only must POST exists
         self.client.post(reverse('requests'))
         # Checking template for post
@@ -87,7 +97,14 @@ class RequestDataTests(TestCase):
         self.assertNotEqual(response.content, "")
 
     def test_post_response(self):
-        "Is post returns correct data"
+        """
+        POST response returns new requests
+
+        POST response always has 'object_list' in context,
+        'object_list' has max 10 entries
+        content-type is html and contains at least one new request,
+        markup is consistent with template and has max 10 rows
+        """
         # If no others requests made - only must POST exists
         self.client.post(reverse('requests'))
         response = self.client.post(reverse('requests'))

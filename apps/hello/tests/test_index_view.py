@@ -8,17 +8,25 @@ from apps.hello.models import Person
 class IndexViewTests(TestCase):
 
     def test_index_reachable(self):
-        "Is index page reachable by url name"
+        """
+        Make GET request to 'index', return status 200
+        """
         resp = self.client.get(reverse('index'))
         self.assertEqual(resp.status_code, 200)
 
     def test_admin_reachable(self):
-        "Is index page reachable by url name"
+        """
+        Make GET request to 'admin:index', return status 200
+        """
         resp = self.client.get(reverse('admin:index'))
         self.assertEqual(resp.status_code, 200)
 
     def test_entries_check(self):
-        "What if no person or two persons"
+        """
+        Render "Empty database" if no entries exists, first entry otherwise
+        On multiple Person entries exists context contains fields 
+        of first entry and template renders it properly
+        """
         # no data provided
         resp = self.client.get(reverse('index'))
         self.assertContains(resp, "Empty database")
@@ -64,7 +72,9 @@ class IndexViewTests(TestCase):
         self.assertContains(resp, "Test title # 1")
 
     def test_cyrillic(self):
-        "If DB has cyrillic strings"
+        """
+        Profile view renders cyrillic fields from DB
+        """
         person = Person(
             name=u"Іван",
             surname=u"Іваненко",
@@ -79,3 +89,13 @@ class IndexViewTests(TestCase):
         person.save()
         resp = self.client.get(reverse('index'))
         self.assertContains(resp, u"Тест")
+
+    def test_empty_DB(self):
+        """
+        On empty DB context passes None
+        """
+        # DB test - returns none
+        self.assertEquals(None, Person.objects.first())
+        # context test - passes None to template
+        resp = self.client.get(reverse('index'))
+        self.assertEquals(None, resp.context['person'])
