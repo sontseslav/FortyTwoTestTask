@@ -8,17 +8,26 @@ from apps.hello.models import Person
 class IndexViewTests(TestCase):
 
     def test_index_reachable(self):
-        "Is index page reachable - returns status 200 on request"
+        """
+        Make GET request to 'index', return status 200
+        """
         resp = self.client.get(reverse('index'))
         self.assertEqual(resp.status_code, 200)
 
     def test_admin_reachable(self):
-        "Is index page reachable - returns status 200 on request"
+        """
+        Make GET request to 'admin:index', return status 200
+        """
         resp = self.client.get(reverse('admin:index'))
         self.assertEqual(resp.status_code, 200)
 
     def test_entries_check(self):
-        "If no person - outputs 'Empty DB', on multiply returns first"
+        """
+        Render "Empty database" if no entries exists, first entry otherwise
+
+        On multiple Person entries exists context contains fields 
+        of first entry and template renders it properly
+        """
         # no data provided
         resp = self.client.get(reverse('index'))
         self.assertContains(resp, "Empty database")
@@ -64,8 +73,9 @@ class IndexViewTests(TestCase):
         self.assertContains(resp, "Test title # 1")
 
     def test_cyrillic(self):
-        "Is view outputs cyrillic symbols properly?"
-        '''On request view returns readable cyrillic symbols. UTF-8 used.'''
+        """
+        Profile view renders cyrillic fields from DB
+        """
         person = Person(
             name=u"Іван",
             surname=u"Іваненко",
@@ -82,7 +92,9 @@ class IndexViewTests(TestCase):
         self.assertContains(resp, u"Тест")
 
     def test_empty_DB(self):
-        "If DB empty - on empty DB context should passes None"
+        """
+        On empty DB context passes None
+        """
         # DB test - returns none
         self.assertEquals(None, Person.objects.first())
         # context test - passes None to template
