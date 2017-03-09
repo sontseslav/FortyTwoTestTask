@@ -68,6 +68,12 @@ $(function() {
                     content += response;
                     var contentRows = (content.match(/<tr>/g) || []).length;
                     var responseRows = (response.match(/<tr>/g) || []).length;
+                    title = $('title').text();
+                    title = title.replace(/\w+/, responseRows + " new requests listed");
+                    setTimeout(function() {
+                        $('title').text("42 Coffee Cups Test Assignment - Requests");
+                    }, 2000);
+                    $('title').text(title);
                     //console.log("contentRows: " + contentRows);
                     //console.log("responseRows: " + responseRows);
                     if (contentRows > 10) {
@@ -79,9 +85,6 @@ $(function() {
                     }
                     content = content.replace(/\n/g, '');
                     console.log("content: " + content);
-                    title = $('title').text();
-                    title = title.replace(/\d+/, responseRows);
-                    $('title').text(title);
                     $("#target").html(content);
 				},
 				error: function(xhr,errmsg,err) {
@@ -91,7 +94,7 @@ $(function() {
 				dataType: "html",
 				complete: poll
 			});
-		}, 3000);
+		}, 5000);
 	}
 	poll();
 });
