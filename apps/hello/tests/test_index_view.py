@@ -21,16 +21,13 @@ class IndexViewTests(TestCase):
         resp = self.client.get(reverse('admin:index'))
         self.assertEqual(resp.status_code, 200)
 
-    def test_entries_check(self):
+    def test_multiply_entries_context(self):
         """
-        Render "Empty database" if no entries exists, first entry otherwise
+        View places to context only first entry if multiply ones exist
 
-        On multiple Person entries exists context contains fields 
-        of first entry and template renders it properly
+        On multiple Person entries exists context contains fields
+        of first entry
         """
-        # no data provided
-        resp = self.client.get(reverse('index'))
-        self.assertContains(resp, "Empty database")
         # two entries added
         for i in range(2):
             person = Person(
@@ -61,6 +58,26 @@ class IndexViewTests(TestCase):
             resp.context['person'].other_contacts, "other contacts"
             )
         self.assertEquals(resp.context['person'].title, "Test title # 1")
+
+    def test_multiply_entries_content(self):
+        """
+        Template shows only first entry if multiply ones exist
+        """
+        # two entries added
+        for i in range(2):
+            person = Person(
+                name="George",
+                surname="Petersen",
+                date_of_birth="1984-09-28",
+                bio="Some data",
+                email="aaa@bbb.ccc",
+                jabber="jabber@domain.com",
+                skype="test",
+                other_contacts="other contacts",
+                title="Test title # " + str(i+1)
+            )
+            person.save()
+        resp = self.client.get(reverse('index'))
         # test template
         self.assertContains(resp, "George")
         self.assertContains(resp, "Petersen")
@@ -93,10 +110,11 @@ class IndexViewTests(TestCase):
 
     def test_empty_DB(self):
         """
-        On empty DB context passes None
+        On empty DB context passes None, view renders "Empty database"
         """
         # DB test - returns none
         self.assertEquals(None, Person.objects.first())
         # context test - passes None to template
         resp = self.client.get(reverse('index'))
         self.assertEquals(None, resp.context['person'])
+        self.assertContains(resp, "Empty database")
