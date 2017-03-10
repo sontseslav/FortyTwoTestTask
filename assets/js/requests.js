@@ -69,11 +69,12 @@ $(function() {
                     var contentRows = (content.match(/<tr>/g) || []).length;
                     var responseRows = (response.match(/<tr>/g) || []).length;
                     title = $('title').text();
-                    title = title.replace(/\w+/, responseRows + " new requests listed");
-                    setTimeout(function() {
-                        $('title').text("42 Coffee Cups Test Assignment - Requests");
-                    }, 2000);
-                    $('title').text(title);
+                    title = title.replace(/.*/, responseRows + " new requests listed");
+                    console.log(title);
+                    $('title').text(title).delay(2000).queue(function(n) {
+                        $(this).text("42 Coffee Cups Test Assignment - Requests");
+                        n();
+                    });
                     //console.log("contentRows: " + contentRows);
                     //console.log("responseRows: " + responseRows);
                     if (contentRows > 10) {
