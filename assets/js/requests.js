@@ -1,5 +1,7 @@
 $(function() {
-	// This function gets cookie with a given name
+	/**
+    * This function gets cookie with a given name
+    */
     function getCookie(name) {
     	//console.log('get cookies');
         var cookieValue = null;
@@ -18,8 +20,8 @@ $(function() {
     }
     var csrftoken = getCookie('csrftoken');
     //console.log('cookie: ' + csrftoken);
-    /*
-    The functions below will create a header with csrftoken
+    /**
+    * The functions below will create a header with csrftoken
     */
 
     function csrfSafeMethod(method) {
@@ -27,8 +29,10 @@ $(function() {
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
     function sameOrigin(url) {
-        // test that a given url is a same-origin URL
-        // url could be relative or scheme relative or absolute
+        /** 
+        * test that a given url is a same-origin URL
+        * url could be relative or scheme relative or absolute
+        */
         var host = document.location.host; // host + port
         var protocol = document.location.protocol;
         var sr_origin = '//' + host;
@@ -53,6 +57,11 @@ $(function() {
 
 	//function for polling
 	//console.log("Loaded!"); // sanity check
+
+    /**
+    * Sends empty POST request, gets new requests, shows max 10 rows.
+    * Repeats constatntly with 5 sec delay.
+    */
 	function poll() {
 		//console.log("start polling");
 		setTimeout(function() {

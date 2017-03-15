@@ -75,9 +75,10 @@ class RequestDataTests(TestCase):
         self.assertEqual(resp.context['object_list'].count(), 2)
         self.assertContains(resp, test_path)
         resp = self.client.get(reverse('requests'))
-        # privious request
-        self.assertEqual(resp.context['object_list'].count(), 1)
-        self.assertNotContains(resp, test_path)
+        # previous request + 2 generated ones
+        self.assertEqual(resp.context['object_list'].count(), 3)
+        # previous exist
+        self.assertContains(resp, test_path)
 
     def test_post_template(self):
         """
