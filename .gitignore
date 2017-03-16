@@ -1,5 +1,6 @@
 .directory
 mockup
 .env/
+.assets/img/*
 *.pyc
 *.sqlite3

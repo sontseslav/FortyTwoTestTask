@@ -97,10 +97,37 @@ class RequestDataTests(TestCase):
         # Is template generated non-empty content
         self.assertNotEqual(response.content, "")
 
-    def test_post_response(self):
+    def test_post_response_new(self):
         """
-        POST response returns new requests
+        POST response returns only new unviewed requests
+        """
+        # Creating 5 viewed requests
+        for i in range(5):
+            request = MyHttpRequest(
+                method="GET",
+                path="/test",
+                server_protocol="HTTP/1.1",
+                status=200,
+                response_length=1245,
+                date=datetime.datetime.now(),
+                viewed=True
+            )
+            request.save()
+        response = self.client.post(reverse('requests'))
+        # context is empty
+        self.assertFalse(response.context['object_list'])
+        # content is empty
+        self.assertFalse(response.content)
+        # mark queries as new
+        MyHttpRequest.objects.all().update(viewed=False)
+        response = self.client.post(reverse('requests'))
+        # context has 5 objects + previous request
+        self.assertEqual(len(response.context['object_list']), 6)
+        # content has 6 rows
+        self.assertEqual(response.content.count('<tr>'), 6)
 
+    def test_post_response_max(self):
+        """
         POST response always has 'object_list' in context,
         'object_list' has max 10 entries
         content-type is html and contains at least one new request,
